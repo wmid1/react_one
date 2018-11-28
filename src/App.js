@@ -135,7 +135,7 @@ class App extends Component {
 
         return (
 
-            <button className="close mr-2 mt-1" aria-label="Close"  onClick={evt => delCard(butId)}>
+            <button className="close ml-2 mb-1" aria-label="Close"  onClick={evt => delCard(butId)}>
               <span aria-hidden="true" >&times;</span>
             </button>
 
