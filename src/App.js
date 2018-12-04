@@ -22,6 +22,7 @@ class App extends Component {
     localStorage.setItem("2name", "In Progress")
     localStorage.setItem("3name", "Testing")
     localStorage.setItem("4name", "Done")
+    localStorage.setItem("start", true)
     }
   }
 
@@ -116,6 +117,7 @@ class App extends Component {
   }
 return (
   <div className="container-fluid p-0" >
+
     <Macushka updateData={this.updateData}/>
     <div className="form-inline p-1 line line-1">
       <NumberList numbers={numbers} />

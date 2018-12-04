@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import './Macushka.css'
+import PopUpStart from './popUpStart'
 
 class Macushka extends Component {
   state = {
     changeSetting: false,
-    value: ''
+    value: '',
+    update: false,
   }
   constructor(props) {
     super(props);
@@ -38,12 +40,16 @@ class Macushka extends Component {
     this.setState({changeSetting: false})
     this.props.updateData(this.state.lock=true);
   }
+  update = (value) =>{
+    this.setState({ username:  value})
+  }
 
 render() {
   let username  = this.state.username;
   let handleSubmit = this.handleSubmit;
   let onChange = this.handleChange;
   let handleExit = this.resetTitle;
+  const update = this.update;
   function PopUp() {
     if (username === undefined) {
       return (
@@ -90,11 +96,14 @@ render() {
   }
 
     return (
+      <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
         <a className="navbar-brand" >{username}</a>
           {PopUp()}
           {ChangeName()}
       </nav>﻿
+        <PopUpStart update={this.update}/>
+      </div>
     )
   }
 }
