@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import DelInclude from './delInclude'
+import PopUpInclude from './popUpInclude'
 import './componentsStyle.css'
-const varCard = (cardId, evn) =>{
-  localStorage.setItem(cardId, document.getElementById(cardId).value)
-}
+
 const addInclude = (cardId,evt) =>{
   console.log(cardId);
   let storedArray = JSON.parse(localStorage.getItem('array_'+cardId));
@@ -36,6 +35,11 @@ const addInclude = (cardId,evt) =>{
   }
 }
 
+const popUpCard = (cardId,number, evn) =>{
+  let idWindow ="id" + cardId + "," + number;
+  let el = document.getElementById(idWindow).style.display = 'block';
+}
+
 function Card(props) {
   let update = props.update;
   let cardId = props.cardId;
@@ -46,13 +50,14 @@ function Card(props) {
     localStorage.setItem(nameArray,JSON.stringify([]));
     localStorage.setItem(fakeArray,JSON.stringify([]));
   }
+  let log = console.log("Hi!");
   const includes = JSON.parse(localStorage.getItem(nameArray));
   const include = includes.map((number) =>
       <div key={number.toString()} className="includes">
-        <textarea type="text" className="form-control rounded ml-2 mr-2 mb-1 mt-1"
-          id={cardId+','+number.toString()}
+        <textarea type="text" className="ml-2 mr-2 mb-1 mt-1 text_a"
           defaultValue={localStorage.getItem(cardId+','+number.toString())}
-          onChange={evn => varCard(cardId+','+number.toString())}
+          onClick={evn => popUpCard(cardId,number)}
+          readOnly
           rows="2"></textarea>
         <DelInclude
           cardId={cardId}
@@ -60,6 +65,12 @@ function Card(props) {
           lock={lock}
           update={update}
         />
+        <PopUpInclude
+          update={update}
+          cardId={cardId.toString()}
+          includeId={number.toString()}
+        />
+
       </div>
     );
   return (

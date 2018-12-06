@@ -79,6 +79,7 @@ render() {
   const changeSettingState = this.state.changeSetting;
 
   function ChangeName() {
+    let button = "button";
     if (changeSettingState !== true) {
       return(
         <button className="btn btn-secondary ml-2" onClick={changeSetting}>

@@ -4,6 +4,7 @@ import './App.css'
 import Macushka from './components/Macushka'
 import ButtonSet from './components/buttonSet'
 import Card from './components/card'
+import PopUpInclude from './components/popUpInclude'
 
 
 class App extends Component {
@@ -97,7 +98,7 @@ class App extends Component {
       }
       return null
   }
-
+//<PopUpInclude update={this.update}/>
   function NumberList(props) {
     const numbers = props.numbers;
       const listItems = numbers.map((number) =>
@@ -123,6 +124,7 @@ return (
       <NumberList numbers={numbers} />
       <ButtonSet update={this.update}/>
     </div>
+
   </div>
         );
       }
