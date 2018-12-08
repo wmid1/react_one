@@ -54,6 +54,7 @@ class App extends Component {
         localStorage.removeItem(butId+","+i);
         localStorage.removeItem("description_"+butId+","+i);
         localStorage.removeItem("description_"+butId+","+i+"_username");
+        localStorage.removeItem("comments_"+butId+","+i+","+i);
         localStorage.removeItem("comments_"+butId+","+i+","+i+"_username");
         localStorage.removeItem("commentArr_"+butId+","+i);
       }
