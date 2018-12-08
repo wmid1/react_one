@@ -3,20 +3,67 @@
   align-items: end;
 }
 .text_a{
-background-color: #f9f9f9;
-padding: .375rem .75rem;
-font-size: 1rem;
-line-height: 1.5;
-color: #495057;
-background-clip: padding-box;
-border: 1px solid #f9f9f9;
-border-radius: .65rem;
+  background-color: #f9f9f9;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-clip: padding-box;
+  border: 1px solid #f9f9f9;
+  border-radius: .65rem;
+  height: auto;
 
 }
+.name_include{
+  height: 45px;
+  position: absolute;
+}
+.comments-inBlock{
+  background-color: rgba(207, 230, 255, 0.25);
+  word-wrap: break-word;
+  width: 98%;
+  text-align: left;
+  margin-left: 1%;
+  border-radius: .25rem;
+  margin-top: 1%;
+}
+.label {
+  margin-left: 12%;
+  justify-content: flex-start;
+}
+.form-inline label {
+  margin-left: 12%;
+  justify-content: flex-start;
+}
+p {
+  margin-bottom: 5px;
+}
+.block_comments{
+  display: block;
+  margin-left: 10%;
+  width: 80%;
+  height: 150px;
+  background-color: #f9f9f9;
+  border-radius: 15px 15px 0 0;
+  overflow-y: auto;
+  color: #495057;
+}
+.comm-a{
+  border-radius: 0 0 15px 15px;
+  border-top: #d0fefccf;
+  border-top-style: inset;
+}
+.username_include{
+  margin-left: 60%;
+  margin-top: -10px;
+}
+.text_a_include{
+  width: 80%;
+}
 .text_a:focus {
-border-color: #f9f9f9;
-outline: none;
-box-shadow: 4px 4px 7px #00000030;
+  border-color: #f9f9f9;
+  outline: none;
+  box-shadow: 4px 4px 7px #00000030;
 }
 .window {
   width:100%;
@@ -32,10 +79,10 @@ box-shadow: 4px 4px 7px #00000030;
 
 #content_window {
   margin:40px auto 0px auto;
-  width:300px;
+  width:70%;
   height: auto;
   padding:20px;
-  background-color: #c5c5c5;
+  background-color: #3c7b84f7;
   border-radius:5px;
   box-shadow: 0px 0px 10px #000;
 }

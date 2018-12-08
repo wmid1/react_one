@@ -49,6 +49,14 @@ class App extends Component {
       localStorage.removeItem(Number(delName));
       localStorage.removeItem(delName+"name");
       localStorage.removeItem("array_"+butId);
+      for (let i = 0; i < 20; i++) {
+        localStorage.removeItem(butId+","+i+"_username");
+        localStorage.removeItem(butId+","+i);
+        localStorage.removeItem("description_"+butId+","+i);
+        localStorage.removeItem("description_"+butId+","+i+"_username");
+        localStorage.removeItem("comments_"+butId+","+i+","+i+"_username");
+        localStorage.removeItem("commentArr_"+butId+","+i);
+      }
     }
   }
 
@@ -71,13 +79,13 @@ class App extends Component {
     if (lock!==true) {
       return(
         <input id={cardNameId} onBlur={evn => cardName(cardNameId)}
-        type="text" className="form-control form-control-sm " defaultValue={localStorage.getItem(cardNameId)} placeholder="Название формы"/>
+        type="text" className=" nameInput inputName_unLock form-control-sm mt-1 " defaultValue={localStorage.getItem(cardNameId)} placeholder="Название формы"/>
       );
     }
       if (localStorage.getItem(cardNameId) == null || undefined || '') {
        return(
          <input id={cardNameId} onBlur={evn => cardName(cardNameId)}
-         type="text" className="form-control form-control-sm " placeholder="Название формы"/>
+         type="text" className="nameInput inputName_lock form-control-sm mt-1" placeholder="Название формы"/>
        );
      }
     return(
@@ -98,7 +106,7 @@ class App extends Component {
       }
       return null
   }
-//<PopUpInclude update={this.update}/>
+
   function NumberList(props) {
     const numbers = props.numbers;
       const listItems = numbers.map((number) =>
@@ -114,20 +122,18 @@ class App extends Component {
       <div id="line" className="form-inline line ">
         {listItems}
       </div>
-        );
+    );
   }
 return (
   <div className="container-fluid p-0" >
-
     <Macushka updateData={this.updateData}/>
     <div className="form-inline p-1 line line-1">
       <NumberList numbers={numbers} />
       <ButtonSet update={this.update}/>
     </div>
-
   </div>
-        );
-      }
+    );
+  }
 }
 
 export default App;

@@ -85,14 +85,12 @@ render() {
         <button className="btn btn-secondary ml-2" onClick={changeSetting}>
           Редактировать
         </button>
-
       )
     }
     return(
       <button className="btn btn-primary ml-2" onClick={saveSetting}>
         Сохранить
       </button>
-
     )
   }
 

@@ -4,7 +4,7 @@
 
 
 .App-header {
-  background-color: #282c34;
+  background-color: #8ab4f7;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -14,7 +14,7 @@
   color: white;
 }
 .bg-card{
-  background-color: #e3e4e5;
+  background-color: #0d96b58f;
   width: 200px;
   min-width: 200px;
 }
@@ -28,15 +28,18 @@
 .line{
   flex-flow: inherit;
 }
-.line-1{
+
+body{
   overflow-x: auto;
-  min-height: 90vh;
+  min-height: 100vh;
 }
 .cardName{
   color: #282c34;
   height: 35px;
-  flex-direction: column;
   align-items: center;
+  display: flex;
+  flex: auto;
+  justify-content: center;
 }
 .cardNameId{
   height: 24px;
@@ -46,9 +49,39 @@
   margin-top: 4px;
   margin-left: 2px;
   margin-right: 2px;
+  overflow: hidden;
+}
+.inputName_unLock{
+  width: 159px;
+}
+.inputName_lock{
+  width: 184px;
+}
+.btn-secondary {
+  color: #fff;
+  background-color: #2b2d33bd;
+  border-color: #00000082;
+}
+.nameInput{
+  height: 25px;
+  color: #495057;
+  background-color: #f9f9f9;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .75rem;
+}
+.nameInput:focus{
+  border-color: #f9f9f9;
+  outline: none;
+  box-shadow: 4px 4px 7px #00000030;
+}
+.nameInput:hover{
+    border-color: #e8e8e8;
+    box-shadow: 2px 2px 5px #00000030;
 }
 #root {
-
+  width: fit-content;
+  min-width: 100%;
   text-align: center;
   display: flex;
   flex-direction: column;

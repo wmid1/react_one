@@ -50,28 +50,27 @@ function Card(props) {
     localStorage.setItem(nameArray,JSON.stringify([]));
     localStorage.setItem(fakeArray,JSON.stringify([]));
   }
-  let log = console.log("Hi!");
+
   const includes = JSON.parse(localStorage.getItem(nameArray));
   const include = includes.map((number) =>
-      <div key={number.toString()} className="includes">
-        <textarea type="text" className="ml-2 mr-2 mb-1 mt-1 text_a"
-          defaultValue={localStorage.getItem(cardId+','+number.toString())}
-          onClick={evn => popUpCard(cardId,number)}
-          readOnly
-          rows="2"></textarea>
-        <DelInclude
-          cardId={cardId}
-          includeId={number.toString()}
-          lock={lock}
-          update={update}
-        />
-        <PopUpInclude
-          update={update}
-          cardId={cardId.toString()}
-          includeId={number.toString()}
-        />
-
-      </div>
+    <div key={number.toString()} className="includes">
+      <textarea type="text" className="ml-2 mr-2 mb-1 mt-1 text_a"
+        defaultValue={localStorage.getItem(cardId+','+number.toString())}
+        onClick={evn => popUpCard(cardId,number)}
+        readOnly
+        rows="2"></textarea>
+      <DelInclude
+        cardId={cardId}
+        includeId={number.toString()}
+        lock={lock}
+        update={update}
+      />
+      <PopUpInclude
+        update={update}
+        cardId={cardId.toString()}
+        includeId={number.toString()}
+      />
+    </div>
     );
   return (
     <div>

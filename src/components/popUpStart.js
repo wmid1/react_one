@@ -43,7 +43,7 @@ class PopUpStart extends Component {
               placeholder="Ваше имя"
               value={username}
               onChange={onChange}/>
-              <button className="btn btn-primary mt-2 ">
+              <button className="btn btn-secondary mt-2 ">
                 Запомнить
               </button>
             </form>
