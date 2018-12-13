@@ -33,7 +33,7 @@ body{
   overflow-x: auto;
   min-height: 100vh;
 }
-.cardName{
+.columnName{
   color: #282c34;
   height: 35px;
   align-items: center;
@@ -41,7 +41,7 @@ body{
   flex: auto;
   justify-content: center;
 }
-.cardNameId{
+.columnNameId{
   height: 24px;
   width: 180px;
   border-radius: 10px;
@@ -49,6 +49,7 @@ body{
   margin-top: 4px;
   margin-left: 2px;
   margin-right: 2px;
+  margin-bottom: 4px;
   overflow: hidden;
 }
 .inputName_unLock{
