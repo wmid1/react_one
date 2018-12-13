@@ -1,0 +1,25 @@
+.startWindow{
+  width:100%;
+  min-height:100%;
+  background-color: rgba(0,0,0,0.5);
+  overflow:hidden;
+  position:fixed;
+  top:0px;
+  z-index: 5;
+
+}
+.startWindow_content {
+  margin:40px auto 0px auto;
+  width:300px;
+  height: 170px;
+  padding:20px;
+  background-color: #3c7b84f7;
+  color: white;
+  border-radius:5px;
+  box-shadow: 0px 0px 10px #000;
+}
+.btn-secondary {
+    color: #fff;
+    background-color: #2b2d33bd;
+    border-color: #00000082;
+  }

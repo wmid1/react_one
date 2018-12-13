@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import './Macushka.css'
+import './Header.css'
 import PopUpStart from './popUpStart'
+import ChangeName from './ChangeName'
+import PropTypes from 'prop-types';
 
-class Macushka extends Component {
+class Header extends Component {
+
   state = {
-    changeSetting: false,
     value: '',
-    update: false,
+    update: false
   }
+
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -26,30 +29,23 @@ class Macushka extends Component {
     this.setState({ username: this.state.value });
     localStorage.setItem("username", this.state.value);
   }
+
   resetTitle = evt => {
     evt.preventDefault();
     this.setState({ username: undefined });
     localStorage.removeItem("username");
   }
-  changeSetting = evt =>{
-    this.setState({changeSetting: true})
-    this.props.updateData(this.state.lock=false);
-    //localStorage.setItem("lock", false)
-  }
-  saveSetting = evt =>{
-    this.setState({changeSetting: false})
-    this.props.updateData(this.state.lock=true);
-  }
+  
   update = (value) =>{
     this.setState({ username:  value})
   }
 
 render() {
-  let username  = this.state.username;
-  let handleSubmit = this.handleSubmit;
-  let onChange = this.handleChange;
-  let handleExit = this.resetTitle;
-  const update = this.update;
+  const username  = this.state.username;
+  const handleSubmit = this.handleSubmit;
+  const onChange = this.handleChange;
+  const handleExit = this.resetTitle;
+  const updateData = this.props.updateData;
   function PopUp() {
     if (username === undefined) {
       return (
@@ -57,11 +53,11 @@ render() {
           <input className="form-control " type="text" name="user"
           pattern=".{3,}"
           required
-          placeholder="Ваше имя"
+          placeholder="Your name"
           value={username}
           onChange={onChange} />
           <button className="btn btn-primary ml-2 ">
-            Запомнить
+            Log In
           </button>
         </form>
     )}
@@ -69,42 +65,24 @@ render() {
         return(
         <div>
           <button className="btn btn-secondary" onClick={handleExit}>
-            Выйти
+            Log Out
           </button>
         </div>
     )}
   }
-  let changeSetting = this.changeSetting;
-  let saveSetting = this.saveSetting;
-  const changeSettingState = this.state.changeSetting;
-
-  function ChangeName() {
-    let button = "button";
-    if (changeSettingState !== true) {
-      return(
-        <button className="btn btn-secondary ml-2" onClick={changeSetting}>
-          Редактировать
-        </button>
-      )
-    }
-    return(
-      <button className="btn btn-primary ml-2" onClick={saveSetting}>
-        Сохранить
-      </button>
-    )
-  }
-
     return (
       <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <a className="navbar-brand" >{username}</a>
+        <div className="navbar-brand" >{username}</div>
           {PopUp()}
-          {ChangeName()}
+          <ChangeName updateData={updateData} />
       </nav>﻿
         <PopUpStart update={this.update}/>
       </div>
     )
   }
 }
-
-export default Macushka;
+Header.propTypes = {
+  updateData: PropTypes.func
+};
+export default Header;
