@@ -31,7 +31,7 @@ class ColumnName extends Component {
     if (!lock) {
       return(
         <input id={columnNameId} onChange={onChange} onBlur={evn => columnName(columnNameId)}
-        type="text" className=" nameInput inputName_unLock form-control-sm mt-1 mb-1 " defaultValue={localStorage.getItem(columnNameId)} placeholder="Название формы"/>
+        type="text" className=" nameInput inputName_unLock form-control-sm mt-1 mb-1 " defaultValue={localStorage.getItem(columnNameId)} placeholder="Column name"/>
       );
     }
       if (localStorage.getItem(columnNameId) == null || undefined || '') {
