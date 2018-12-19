@@ -6,7 +6,7 @@ import DelColumn from './components/DelColumn/DelColumn'
 import ColumnName from './components/ColumnName/ColumnName'
 import Column from './components/Column/Column'
 import PopUpCard from './components/Column/PopUpCard'
-
+import ColumnName_1 from './containers/ColumnName_1'
 class App extends Component {
   state = {
     lock: true,
@@ -104,7 +104,7 @@ return (
       <NumberList numbers={numbers} />
       <ButtonSet update={this.update}/>
     </div>
-
+    <ColumnName_1 />
   </div>
     );
   }
