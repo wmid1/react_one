@@ -1,63 +1,63 @@
 import React, { Component } from 'react';
-import './popUpStart.css'
-class PopUpStart extends Component {
+import './popUpStart.css';
 
+class PopUpStart extends Component {
   state = {
-    value: ''
-  }
+    value: '',
+  };
 
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    let username = localStorage.getItem("username");
+    const username = localStorage.getItem('username');
     if (username !== null || undefined) {
-      this.state = {username: username}
+      this.state = { username };
     }
   }
 
   handleChange(e) {
-    this.setState({value: e.target.value});
+    this.setState({ value: e.target.value });
   }
 
   handleSubmit(e) {
     this.setState({ username: this.state.value });
-    localStorage.setItem("username", this.state.value);
-    localStorage.setItem("start", false)
+    localStorage.setItem('username', this.state.value);
+    localStorage.setItem('start', false);
     this.props.update(this.state.value);
   }
 
   render() {
-    let handleSubmit = this.handleSubmit;
-    let onChange = this.handleChange;
-    let username  = this.state.username;
+    const handleSubmit = this.handleSubmit;
+    const onChange = this.handleChange;
+    const username = this.state.username;
     function StartName() {
-      if (JSON.parse(localStorage.getItem("start")) === true) {
+      if (JSON.parse(localStorage.getItem('start')) === true) {
         return (
           <div className="startWindow">
             <form className="startWindow_content" onSubmit={handleSubmit}>
-              <h4><b>Welcome!</b></h4>
-              <input className="form-control rounded mb-1 mt-3" type="text" name="user"
-              pattern=".{3,}"
-              required
-              placeholder="Your name"
-              value={username}
-              onChange={onChange}/>
-              <button className="btn btn-secondary mt-2 ">
-                Log In
-              </button>
+              <h4>
+                <b>Welcome!</b>
+              </h4>
+              <input
+                className="form-control rounded mb-1 mt-3"
+                type="text"
+                name="user"
+                pattern=".{3,}"
+                required
+                placeholder="Your name"
+                value={username}
+                onChange={onChange}
+              />
+              <button className="btn btn-secondary mt-2 ">Log In</button>
             </form>
           </div>
         );
       }
-        return null
+      return null;
     }
 
-    return (
-      <div>
-        {StartName()}
-      </div>
-    );
+    return <div>{StartName()}</div>;
   }
 }
 export default PopUpStart;

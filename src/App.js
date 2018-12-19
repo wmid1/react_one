@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import './App.css'
-import Header from './components/Header/Header'
-import ButtonSet from './components/ButtonSet/ButtonSet'
-import DelColumn from './components/DelColumn/DelColumn'
-import ColumnName from './components/ColumnName/ColumnName'
-import Column from './components/Column/Column'
-import PopUpCard from './components/Column/PopUpCard'
-import ColumnName_1 from './containers/ColumnName_1'
+import './App.css';
+import Header from './components/Header/Header';
+import ButtonSet from './components/ButtonSet/ButtonSet';
+import DelColumn from './components/DelColumn/DelColumn';
+import ColumnName from './components/ColumnName/ColumnName';
+import Column from './components/Column/Column';
+import PopUpCard from './components/Column/PopUpCard';
+import ColumnName_1 from './containers/ColumnName_1';
+
 class App extends Component {
   state = {
     lock: true,
@@ -14,67 +15,62 @@ class App extends Component {
     value: '',
     modalIsOpen: false,
     colIsOpen: undefined,
-    cardIsOpen: undefined
-  }
+    cardIsOpen: undefined,
+  };
 
   constructor(props) {
     super(props);
-    if (JSON.parse(localStorage.getItem("numbers")) === null || undefined) {
-    localStorage.setItem("numbers", JSON.stringify([1,2,3,4]));
-    localStorage.setItem("columnId", ("[]"));
-    localStorage.setItem("1name", "TODO")
-    localStorage.setItem("2name", "In Progress")
-    localStorage.setItem("3name", "Testing")
-    localStorage.setItem("4name", "Done")
-    localStorage.setItem("start", true)
+    if (JSON.parse(localStorage.getItem('numbers')) === null || undefined) {
+      localStorage.setItem('numbers', JSON.stringify([1, 2, 3, 4]));
+      localStorage.setItem('columnId', '[]');
+      localStorage.setItem('1name', 'TODO');
+      localStorage.setItem('2name', 'In Progress');
+      localStorage.setItem('3name', 'Testing');
+      localStorage.setItem('4name', 'Done');
+      localStorage.setItem('start', true);
     }
   }
 
-  modalChangeOpen = (value) =>{
-    this.setState({ modalIsOpen: value})
-  }
-  colChangeOpen = (value) =>{
-    this.setState({ colIsOpen: value})
-  }
-  cardChangeOpen = (value) =>{
-    this.setState({ cardIsOpen: value})
-  }
+  modalChangeOpen = value => {
+    this.setState({ modalIsOpen: value });
+  };
 
-  update = (value) =>{
-    this.setState({ update:  value})
-  }
+  colChangeOpen = value => {
+    this.setState({ colIsOpen: value });
+  };
 
-  updateData = (value) =>{
-    this.setState({lock: value})
-  }
+  cardChangeOpen = value => {
+    this.setState({ cardIsOpen: value });
+  };
+
+  update = value => {
+    this.setState({ update: value });
+  };
+
+  updateData = value => {
+    this.setState({ lock: value });
+  };
 
   render() {
-  const {lock, modalIsOpen, colIsOpen, cardIsOpen } = this.state;
-  const {modalChangeOpen, colChangeOpen, cardChangeOpen, update} = this;
-  const numbers = JSON.parse(localStorage.getItem("numbers"));
-  const popUp = (
-    <PopUpCard
-      update={update}
-      columnId={colIsOpen}
-      cardId={cardIsOpen}
-      modalIsOpen={modalIsOpen}
-      modalChangeOpen={modalChangeOpen}
-    />
-  )
-  function NumberList(props) {
-    const numbers = props.numbers;
-      const listItems = numbers.map((number) =>
-        <div className="bg-card text-white rounded ml-2 mt-2 mb-2" key={number.toString()} id={number.toString()} >
+    const { lock, modalIsOpen, colIsOpen, cardIsOpen } = this.state;
+    const { modalChangeOpen, colChangeOpen, cardChangeOpen, update } = this;
+    const numbers = JSON.parse(localStorage.getItem('numbers'));
+    const popUp = (
+      <PopUpCard
+        update={update}
+        columnId={colIsOpen}
+        cardId={cardIsOpen}
+        modalIsOpen={modalIsOpen}
+        modalChangeOpen={modalChangeOpen}
+      />
+    );
+    function NumberList(props) {
+      const numbers = props.numbers;
+      const listItems = numbers.map(number => (
+        <div className="bg-card text-white rounded ml-2 mt-2 mb-2" key={number.toString()} id={number.toString()}>
           <div className="columnName  form-control-sm">
-            <ColumnName
-              columnNameId={number.toString()+'name'}
-              lock={lock}
-            />
-            <DelColumn
-              columnId={number.toString()}
-              update={update}
-              lock={lock}
-            />
+            <ColumnName columnNameId={`${number.toString()}name`} lock={lock} />
+            <DelColumn columnId={number.toString()} update={update} lock={lock} />
           </div>
           <Column
             columnId={number.toString()}
@@ -86,26 +82,25 @@ class App extends Component {
             cardIsOpen={cardIsOpen}
             colChangeOpen={colChangeOpen}
             cardChangeOpen={cardChangeOpen}
-
           />
         </div>
-        );
+      ));
+      return (
+        <div id="line" className="form-inline line ">
+          {listItems}
+          {popUp}
+        </div>
+      );
+    }
     return (
-      <div id="line" className="form-inline line ">
-        {listItems}
-        {popUp}
+      <div className="container-fluid p-0">
+        <Header updateData={this.updateData} />
+        <div className="form-inline p-1 line line-1">
+          <NumberList numbers={numbers} />
+          <ButtonSet update={this.update} />
+        </div>
+        <ColumnName_1 />
       </div>
-    );
-  }
-return (
-  <div className="container-fluid p-0" >
-    <Header updateData={this.updateData}/>
-    <div className="form-inline p-1 line line-1">
-      <NumberList numbers={numbers} />
-      <ButtonSet update={this.update}/>
-    </div>
-    <ColumnName_1 />
-  </div>
     );
   }
 }

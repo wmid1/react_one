@@ -1,35 +1,27 @@
-import '../App.css'
+import '../App.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-//import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-
+// import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
 
 class ColumnName_1 extends Component {
-  showList (){
-    return this.props.columnNames.map((columnName) => {
-      return (
-        <h6 key={columnName.id}>{columnName.columnName}</h6>
-      );
-    });
+  showList() {
+    return this.props.columnNames.map(columnName => <h6 key={columnName.id}>{columnName.columnName}</h6>);
   }
 
   render() {
-    return (
-      <div>
-        {this.showList()}
-      </div>
-    );
+    return <div>{this.showList()}</div>;
   }
 }
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
-  columnNames: state.columnNames
-};
+    columnNames: state.columnNames,
+  };
 }
 ColumnName_1.propTypes = {
   update: PropTypes.func,
   lock: PropTypes.bool,
-  columnNameId: PropTypes.string
+  columnNameId: PropTypes.string,
+  columnNames: PropTypes.arrayOf(PropTypes.string),
 };
 export default connect(mapStateToProps)(ColumnName_1);

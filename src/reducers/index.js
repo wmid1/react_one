@@ -1,8 +1,8 @@
-import {combineReducers} from 'redux';
-import ColumnNameReducer from './ColumnNameReducer'
+import { combineReducers } from 'redux';
+import ColumnNameReducer from './ColumnNameReducer';
 
 const allReducers = combineReducers({
-  columnNames: ColumnNameReducer
+  columnNames: ColumnNameReducer,
 });
 
-export default allReducers
+export default allReducers;
