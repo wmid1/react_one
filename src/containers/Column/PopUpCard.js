@@ -35,6 +35,7 @@ class PopUpCard extends Component {
 
   close = () => {
     this.setState({ update: true });
+    this.setState({ task: '' });
     const { columnId, cardId } = this.props;
     const valueTask = this.state.task;
     this.props.update(true);
