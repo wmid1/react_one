@@ -19,19 +19,6 @@ class App extends Component {
     cardIsOpen: undefined,
   };
 
-  /*   constructor(props) {
-    super(props);
-    if (JSON.parse(localStorage.getItem('numbers')) === null || undefined) {
-      localStorage.setItem('numbers', JSON.stringify([1, 2, 3, 4]));
-      localStorage.setItem('columnId', '[]');
-      localStorage.setItem('1name', 'TODO');
-      localStorage.setItem('2name', 'In Progress');
-      localStorage.setItem('3name', 'Testing');
-      localStorage.setItem('4name', 'Done');
-      localStorage.setItem('start', true);
-    }
-  } */
-
   modalChangeOpen = value => {
     this.setState({ modalIsOpen: value });
   };
@@ -67,7 +54,7 @@ class App extends Component {
     );
 
     const listItems = numbers.map(number => (
-      <div className="bg-card text-white rounded ml-2 mt-2 mb-2" key={number}>
+      <div className="bg-card text-white rounded ml-2 mt-2 mb-2" key={`${number}card`}>
         <div className="columnName  form-control-sm">
           <ColumnName columnNameId={number} lock={lock} />
           <DelColumn columnId={number} update={update} lock={lock} />

@@ -9,7 +9,6 @@ class ColumnName extends Component {
     const idCol = event.target.id;
     const valueCol = event.target.value;
     this.props.setColNameAction(valueCol, idCol);
-    console.log(valueCol, idCol);
   };
 
   render() {
