@@ -42,7 +42,7 @@ export default function(state = initialState, action) {
       return [
         ...state,
         {
-          id: arrayObjects.length + 1,
+          id: arrayObjects.slice(-1)[0].id + 1,
           columnName: '',
           cardQuant: [],
           card: [
