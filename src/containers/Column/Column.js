@@ -1,45 +1,44 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addCard } from '../../actions/ColAction';
+import { addCard, openCard } from '../../actions/ColAction';
 import DelCard from './DelCard';
 import './componentsStyle.css';
 
 class Column extends Component {
-  addCard = columnId => {
-    this.props.addCardAction(columnId);
+  addCard = indexCol => {
+    this.props.addCardAction(indexCol);
   };
 
-  popUpCard = (columnId, number) => {
+  popUpCard = (cardBox, columnId, cardId) => {
+    const indexCard = cardBox.findIndex(obj => obj.id === cardId);
+    const initialCard = cardBox[indexCard];
+    this.props.openCardAction(initialCard);
     this.props.colChangeOpen(columnId);
-    this.props.cardChangeOpen(number);
+    this.props.cardChangeOpen(cardId);
     this.props.modalChangeOpen(true);
   };
 
   render() {
-    const { update, columnId, lock } = this.props;
-    const includes = this.props.columnNames[columnId - 1].cardQuant;
-    const cardBox = this.props.columnNames[columnId - 1].card;
-    const include = includes.map(number => (
-      <div key={number} className="includes">
-        <textarea
-          type="text"
-          className="ml-2 mr-2 mb-2  text_a"
-          defaultValue={cardBox[number - 1].task}
-          onClick={() => this.popUpCard(columnId, number)}
-          readOnly
-          rows="2"
-        />
-        <DelCard columnId={columnId} cardId={number} lock={lock} update={update} />
+    const { columnId, lock } = this.props;
+    const indexCol = this.props.columnArr.findIndex(obj => obj.id === columnId);
+    const cardBox = this.props.columnArr[indexCol].cards;
+
+    const include = cardBox.map(card => (
+      <div key={card.id} className="cardBox">
+        <pre type="text" className="ml-2 mr-2 mb-2  text_a" onClick={() => this.popUpCard(cardBox, columnId, card.id)}>
+          {card.task}
+        </pre>
+        <DelCard columnId={columnId} cardId={card.id} lock={lock} />
       </div>
     ));
-    if (includes.length !== 0) {
-      if (cardBox[Math.max(...includes) - 1].task !== '') {
+    if (cardBox.length !== 0) {
+      if (cardBox[cardBox.length - 1].task !== '') {
         return (
           <div>
             {include}
-            <div onClick={() => update(true)}>
-              <button className="btn btn-secondary mb-2 op" onClick={() => this.addCard(columnId)}>
+            <div>
+              <button className="btn btn-secondary mb-2 op" onClick={() => this.addCard(indexCol)}>
                 Add Card +
               </button>
             </div>
@@ -52,8 +51,8 @@ class Column extends Component {
     return (
       <div>
         {include}
-        <div onClick={() => update(true)}>
-          <button className="btn btn-secondary mb-2 op" onClick={() => this.addCard(columnId)}>
+        <div>
+          <button className="btn btn-secondary mb-2 op" onClick={() => this.addCard(indexCol)}>
             Add Card +
           </button>
         </div>
@@ -63,21 +62,22 @@ class Column extends Component {
 }
 function mapStateToProps(store) {
   return {
-    columnNames: store.columnNames,
+    columnArr: store.columnArr,
   };
 }
 const mapDispatchToProps = dispatch => ({
-  addCardAction: columnId => dispatch(addCard(columnId)),
+  openCardAction: initialCard => dispatch(openCard(initialCard)),
+  addCardAction: indexCol => dispatch(addCard(indexCol)),
 });
 Column.propTypes = {
-  update: PropTypes.func,
+  columnArr: PropTypes.array,
   lock: PropTypes.bool,
   modalChangeOpen: PropTypes.func,
-  columnId: PropTypes.number,
+  columnId: PropTypes.string,
   colChangeOpen: PropTypes.func,
   cardChangeOpen: PropTypes.func,
   addCardAction: PropTypes.func.isRequired,
-  columnNames: PropTypes.arrayOf(PropTypes.object),
+  openCardAction: PropTypes.func.isRequired,
 };
 
 export default connect(
