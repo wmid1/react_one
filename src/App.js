@@ -12,7 +12,6 @@ import './App.css';
 class App extends Component {
   state = {
     lock: true,
-    update: false,
     value: '',
     modalIsOpen: false,
     colIsOpen: undefined,
@@ -41,27 +40,20 @@ class App extends Component {
 
   render() {
     const { lock, modalIsOpen, colIsOpen, cardIsOpen } = this.state;
-    const { modalChangeOpen, colChangeOpen, cardChangeOpen, update } = this;
-    const numbers = this.props.colBox;
+    const { modalChangeOpen, colChangeOpen, cardChangeOpen } = this;
+    const columns = this.props.columnArr;
     const popUp = (
-      <PopUpCard
-        update={update}
-        columnId={colIsOpen}
-        cardId={cardIsOpen}
-        modalIsOpen={modalIsOpen}
-        modalChangeOpen={modalChangeOpen}
-      />
+      <PopUpCard columnId={colIsOpen} cardId={cardIsOpen} modalIsOpen={modalIsOpen} modalChangeOpen={modalChangeOpen} />
     );
 
-    const listItems = numbers.map(number => (
-      <div className="bg-card text-white rounded ml-2 mt-2 mb-2" key={`${number}card`}>
+    const listItems = columns.map(column => (
+      <div className="bg-card text-white rounded ml-2 mt-2 mb-2" key={column.id}>
         <div className="columnName  form-control-sm">
-          <ColumnName columnNameId={number} lock={lock} />
-          <DelColumn columnId={number} update={update} lock={lock} />
+          <ColumnName columnNameId={column.id} lock={lock} />
+          <DelColumn columnId={column.id} lock={lock} />
         </div>
         <Column
-          columnId={number}
-          update={update}
+          columnId={column.id}
           lock={lock}
           modalIsOpen={modalIsOpen}
           modalChangeOpen={modalChangeOpen}
@@ -81,7 +73,7 @@ class App extends Component {
             {listItems}
             {popUp}
           </div>
-          <ButtonSet update={this.update} />
+          <ButtonSet />
         </div>
       </div>
     );
@@ -90,14 +82,12 @@ class App extends Component {
 
 function mapStateToProps(store) {
   return {
-    columnNames: store.columnNames,
-    colBox: store.colBox,
+    columnArr: store.columnArr,
   };
 }
 
 App.propTypes = {
-  colBox: PropTypes.arrayOf(PropTypes.number),
-  columnNames: PropTypes.arrayOf(PropTypes.object),
+  columnArr: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default connect(mapStateToProps)(App);
