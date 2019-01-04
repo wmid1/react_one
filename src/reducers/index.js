@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
-import ColumnNameReducer from './ColumnNameReducer';
-import ColumnQuantity from './ColumnQuantity';
-import params from './params';
+import ColumnReducer from './ColumnReducer';
+import userReducer from './userReducer';
+import cardReducer from './cardReducer';
 
 const allReducers = combineReducers({
-  columnNames: ColumnNameReducer,
-  colBox: ColumnQuantity,
-  params,
+  columnArr: ColumnReducer,
+  cardReducer,
+  userReducer,
 });
 
 export default allReducers;
