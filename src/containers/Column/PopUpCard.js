@@ -2,135 +2,109 @@ import React, { Component } from 'react';
 import './componentsStyle.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setDesc, setTask, setComment, setUserTask } from '../../actions/ColAction';
+import { setDesc, setTask, setComment, updateCard } from '../../actions/ColAction';
 
 class PopUpCard extends Component {
   state = {
-    update: false,
-    comm: 0,
-    comment: '',
-    task: '',
     value: '',
   };
 
   setTask = event => {
-    const { columnId, cardId } = this.props;
-    const { username } = this.props.params;
-    this.setState({ task: event.target.value });
-    this.props.setUserTask(columnId, cardId, username);
+    const valueTask = event.target.value;
+    this.props.setTaskAction(valueTask);
   };
 
   setDesc = event => {
-    const { username } = this.props.params;
-    this.props.update(true);
-    const { columnId, cardId } = this.props;
     const valueDesc = event.target.value;
-    this.props.setDescAction(columnId, cardId, valueDesc, username);
+    this.props.setDescAction(valueDesc);
   };
 
   handleChange = event => {
-    this.setState({ comment: event.target.value });
     this.setState({ value: event.target.value });
   };
 
-  close = () => {
-    this.setState({ update: true });
-    this.setState({ task: '' });
-    const { columnId, cardId } = this.props;
-    const valueTask = this.state.task;
-    this.props.update(true);
+  close = (indexCol, indexCard) => {
+    const card = this.props.cardReducer;
+    this.props.updateCardAction(card, indexCol, indexCard);
     this.props.modalChangeOpen(false);
-    if (valueTask !== '') {
-      this.props.setTaskAction(columnId, cardId, valueTask);
-    }
+    this.setState({ value: '' });
   };
 
   addComment = () => {
     if (this.state.value !== '') {
-      const { username } = this.props.params;
-      const { columnId, cardId } = this.props;
-      const valueComment = this.state.comment;
-      this.props.setCommentAction(columnId, cardId, valueComment, username);
-      this.setState({ value: '' });
-      this.setState({ comment: '' });
-      this.setState({ update: true });
+      const { username } = this.props.userReducer;
+      const valueComment = this.state.value;
+      this.props.setCommentAction(valueComment, username);
+      this.setState({ value: '', comment: '' });
     }
   };
 
   render() {
-    const onChange = this.handleChange;
     const { columnId, cardId, modalIsOpen } = this.props;
+    const indexCol = this.props.columnArr.findIndex(obj => obj.id === columnId);
 
     if (modalIsOpen) {
-      const cardBox = this.props.columnNames[columnId - 1].card;
-      const idWindow = `id${columnId},${cardId}`;
-      const task = `${columnId},${cardId}`;
-      const description = `description_${task}`;
-      const comments = `comments_${task}`;
-      const commentItem = cardBox[cardId - 1].commentsQuant;
-      const commentItems = commentItem.map(number => (
-        <div className="comments-inBlock" key={number}>
-          <b>{cardBox[cardId - 1].userComments[number - 1]}</b>
-          <p>{cardBox[cardId - 1].comments[number - 1]}</p>
+      const cardBox = this.props.columnArr[indexCol].cards;
+      const indexCard = cardBox.findIndex(obj => obj.id === cardId);
+      const commentItem = this.props.cardReducer.comments;
+      const commentItems = commentItem.map(comment => (
+        <div className="comments-inBlock" key={comment.id}>
+          <b> {comment.username}</b>
+          <p>{comment.value}</p>
         </div>
       ));
 
       return (
-        <div id={idWindow} className="p-0 window">
+        <div className="p-0 window">
           <div id="content_window" className="col-md-auto">
             <div>
               <button
                 className="  justify-content-md-end close align-top mr-2"
                 aria-label="Close"
-                onClick={() => this.close(idWindow)}
+                onClick={() => this.close(indexCol, indexCard)}
               >
                 <span aria-hidden="true">&times;</span>
               </button>
               <div className="  justify-content-md-center">
                 {' '}
-                <h2> {this.props.columnNames[columnId - 1].columnName} </h2>{' '}
+                <h2> {this.props.columnArr[indexCol].columnName} </h2>{' '}
               </div>
             </div>
             <div className="  justify-content-md-center mt-4">
-              <label htmlFor={task}>Task name:</label>
+              <label>Task name:</label>
               <textarea
                 type="text"
                 className=" mb-1 mt-1 text_a text_a_include"
-                id={task}
-                defaultValue={cardBox[cardId - 1].task}
+                defaultValue={cardBox[indexCard].task}
                 onChange={this.setTask}
                 rows="2"
               />
-              <div type="text" className=" username_include">
-                {' '}
-                {cardBox[cardId - 1].userTask}{' '}
-              </div>
             </div>
             <div className=" justify-content-md-center">
               <label>Full description:</label>
               <textarea
                 type="text"
                 className=" mb-1 mt-1 text_a text_a_include"
-                id={description}
-                defaultValue={cardBox[cardId - 1].desc}
+                defaultValue={cardBox[indexCard].desc}
                 onChange={this.setDesc}
                 rows="3"
               />
-              <div className=" username_include"> {cardBox[cardId - 1].userDesc} </div>
             </div>
             <div className="  justify-content-md-center">
               <label>Comments:</label>
-              <div className="block_comments mt-1">{commentItems}</div>
+              <pre className="block_comments mt-1">{commentItems}</pre>
               <textarea
                 type="text"
-                id={comments}
-                onChange={onChange}
+                onChange={this.handleChange}
                 value={this.state.value}
                 className="comm-a mb-1  text_a text_a_include"
                 placeholder={' leave a comment'}
                 rows="2"
               />
-              <button onClick={() => this.addComment(task)} className="btn btn-secondary ml-2 op mt-2 wth">
+              <button
+                onClick={() => this.addComment(indexCol, indexCard)}
+                className="btn btn-secondary ml-2 op mt-2 wth"
+              >
                 Add comment
               </button>
             </div>
@@ -143,29 +117,29 @@ class PopUpCard extends Component {
 }
 function mapStateToProps(store) {
   return {
-    columnNames: store.columnNames,
-    params: store.params,
+    columnArr: store.columnArr,
+    userReducer: store.userReducer,
+    cardReducer: store.cardReducer,
   };
 }
 const mapDispatchToProps = dispatch => ({
-  setTaskAction: (columnId, cardId, valueTask) => dispatch(setTask(columnId, cardId, valueTask)),
-  setDescAction: (columnId, cardId, valueDesc, username) => dispatch(setDesc(columnId, cardId, valueDesc, username)),
-  setCommentAction: (columnId, cardId, valueComment, username) =>
-    dispatch(setComment(columnId, cardId, valueComment, username)),
-  setUserTask: (columnId, cardId, username) => dispatch(setUserTask(columnId, cardId, username)),
+  updateCardAction: (card, indexCol, indexCard) => dispatch(updateCard(card, indexCol, indexCard)),
+  setTaskAction: valueTask => dispatch(setTask(valueTask)),
+  setDescAction: valueDesc => dispatch(setDesc(valueDesc)),
+  setCommentAction: (valueComment, username) => dispatch(setComment(valueComment, username)),
 });
 PopUpCard.propTypes = {
   modalIsOpen: PropTypes.bool,
-  cardId: PropTypes.number,
-  columnId: PropTypes.number,
-  update: PropTypes.func,
+  cardId: PropTypes.string,
+  columnId: PropTypes.string,
+  columnArr: PropTypes.array,
+  userReducer: PropTypes.object,
+  cardReducer: PropTypes.object,
   modalChangeOpen: PropTypes.func,
-  columnNames: PropTypes.array,
-  params: PropTypes.object,
   setTaskAction: PropTypes.func.isRequired,
   setDescAction: PropTypes.func.isRequired,
   setCommentAction: PropTypes.func.isRequired,
-  setUserTask: PropTypes.func.isRequired,
+  updateCardAction: PropTypes.func.isRequired,
 };
 export default connect(
   mapStateToProps,
