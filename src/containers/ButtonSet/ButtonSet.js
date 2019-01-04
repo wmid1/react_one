@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addBtn, addQuant } from '../../actions/ColAction';
-// resolve(this.props.addBtnAction())
+import { addColumn } from '../../actions/ColAction';
+
 class ButtonSet extends Component {
   onBtnClick = () => {
-    this.props.addBtnAction();
-    this.props.addQuantAction();
+    this.props.addColumnAction();
   };
 
   render() {
@@ -22,19 +21,16 @@ class ButtonSet extends Component {
 
 function mapStateToProps(store) {
   return {
-    columnNames: store.columnNames,
+    columnArr: store.columnArr,
   };
 }
 
 const mapDispatchToProps = dispatch => ({
-  addBtnAction: () => dispatch(addBtn()),
-  addQuantAction: () => dispatch(addQuant()),
+  addColumnAction: () => dispatch(addColumn()),
 });
 
 ButtonSet.propTypes = {
-  update: PropTypes.func,
-  addBtnAction: PropTypes.func.isRequired,
-  addQuantAction: PropTypes.func.isRequired,
+  addColumnAction: PropTypes.func.isRequired,
 };
 
 export default connect(
