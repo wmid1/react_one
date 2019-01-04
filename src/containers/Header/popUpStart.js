@@ -18,11 +18,10 @@ class PopUpStart extends Component {
     this.props.setUserAction(username);
     this.props.startEndAction();
     this.setState({ value: '' });
-    this.props.update(this.state.value);
   };
 
   render() {
-    if (this.props.params.start) {
+    if (this.props.userReducer.start) {
       return (
         <div className="startWindow">
           <div className="startWindow_content">
@@ -53,7 +52,7 @@ class PopUpStart extends Component {
 }
 function mapStateToProps(store) {
   return {
-    params: store.params,
+    userReducer: store.userReducer,
   };
 }
 const mapDispatchToProps = dispatch => ({
@@ -62,10 +61,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 PopUpStart.propTypes = {
-  params: PropTypes.object,
+  userReducer: PropTypes.object,
   setUserAction: PropTypes.func.isRequired,
   startEndAction: PropTypes.func.isRequired,
-  update: PropTypes.func,
 };
 export default connect(
   mapStateToProps,

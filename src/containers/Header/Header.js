@@ -36,8 +36,8 @@ class Header extends Component {
     return (
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <div className="navbar-brand">{this.props.params.username}</div>
-          {this.props.params.username === '' && (
+          <div className="navbar-brand">{this.props.userReducer.username}</div>
+          {this.props.userReducer.username === '' && (
             <div className="form-inline">
               <input
                 className="form-control "
@@ -55,7 +55,7 @@ class Header extends Component {
             </div>
           )}
 
-          {this.props.params.username !== '' && (
+          {this.props.userReducer.username !== '' && (
             <div>
               <button className="btn btn-secondary" onClick={this.resetTitle}>
                 Log Out
@@ -73,7 +73,7 @@ class Header extends Component {
 }
 function mapStateToProps(store) {
   return {
-    params: store.params,
+    userReducer: store.userReducer,
   };
 }
 const mapDispatchToProps = dispatch => ({
@@ -82,7 +82,7 @@ const mapDispatchToProps = dispatch => ({
 Header.propTypes = {
   updateData: PropTypes.func,
   setUserAction: PropTypes.func,
-  params: PropTypes.object,
+  userReducer: PropTypes.object,
 };
 
 export default connect(
