@@ -6,13 +6,15 @@ import { setColName } from '../../actions/ColAction';
 
 class ColumnName extends Component {
   reNameCol = event => {
-    const idCol = event.target.id;
+    const { columnNameId } = this.props;
+    const indexCol = this.props.columnArr.findIndex(obj => obj.id === columnNameId);
     const valueCol = event.target.value;
-    this.props.setColNameAction(valueCol, idCol);
+    this.props.setColNameAction(valueCol, indexCol);
   };
 
   render() {
     const { columnNameId, lock } = this.props;
+    const indexCol = this.props.columnArr.findIndex(obj => obj.id === columnNameId);
     if (!lock) {
       return (
         <input
@@ -20,13 +22,13 @@ class ColumnName extends Component {
           onBlur={this.reNameCol}
           type="text"
           className=" nameInput inputName_unLock form-control-sm mt-1 mb-1 "
-          defaultValue={this.props.columnNames[columnNameId - 1].columnName}
+          defaultValue={this.props.columnArr[indexCol].columnName}
           placeholder="Column name"
         />
       );
     }
 
-    if (this.props.columnNames[columnNameId - 1].columnName === '') {
+    if (this.props.columnArr[indexCol].columnName === '') {
       return (
         <input
           id={columnNameId}
@@ -40,7 +42,7 @@ class ColumnName extends Component {
 
     return (
       <div className="columnNameId">
-        <b>{this.props.columnNames[columnNameId - 1].columnName}</b>
+        <b>{this.props.columnArr[indexCol].columnName}</b>
       </div>
     );
   }
@@ -48,18 +50,17 @@ class ColumnName extends Component {
 
 function mapStateToProps(store) {
   return {
-    columnNames: store.columnNames,
+    columnArr: store.columnArr,
   };
 }
 
 const mapDispatchToProps = dispatch => ({
-  setColNameAction: (idCol, valueCol) => dispatch(setColName(idCol, valueCol)),
+  setColNameAction: (indexCol, valueCol) => dispatch(setColName(indexCol, valueCol)),
 });
 ColumnName.propTypes = {
-  update: PropTypes.func,
   lock: PropTypes.bool,
-  columnNameId: PropTypes.number,
-  columnNames: PropTypes.array,
+  columnNameId: PropTypes.string,
+  columnArr: PropTypes.array,
   setColNameAction: PropTypes.func.isRequired,
 };
 export default connect(
