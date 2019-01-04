@@ -7,8 +7,11 @@ class DelCard extends Component {
   state = { update: false };
 
   delItem = (columnId, cardId) => {
+    const indexCol = this.props.columnArr.findIndex(obj => obj.id === columnId);
+    const cardBox = this.props.columnArr[indexCol].cards;
+    const indexCard = cardBox.findIndex(obj => obj.id === cardId);
     if (!this.props.lock) {
-      this.props.delCardAction(columnId, cardId);
+      this.props.delCardAction(indexCol, indexCard);
     }
   };
 
@@ -27,18 +30,18 @@ class DelCard extends Component {
 }
 function mapStateToProps(store) {
   return {
-    columnNames: store.columnNames,
+    columnArr: store.columnArr,
   };
 }
 
 const mapDispatchToProps = dispatch => ({
-  delCardAction: (columnId, cardId) => dispatch(delCard(columnId, cardId)),
+  delCardAction: (indexCol, indexCard) => dispatch(delCard(indexCol, indexCard)),
 });
 DelCard.propTypes = {
-  cardId: PropTypes.number,
   lock: PropTypes.bool,
-  columnId: PropTypes.number,
-  update: PropTypes.func,
+  cardId: PropTypes.string,
+  columnId: PropTypes.string,
+  columnArr: PropTypes.array,
   delCardAction: PropTypes.func.isRequired,
 };
 
