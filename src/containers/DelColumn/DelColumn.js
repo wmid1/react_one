@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { delQuant, delBtn } from '../../actions/ColAction';
+import { delColumn } from '../../actions/ColAction';
 import '../../App.css';
 
 class DelColumn extends Component {
-  delColumn = columnId => {
+  delColumn = indexCol => {
     this.setState({ lock: false });
     if (!this.props.lock) {
-      this.props.delQuantAction(columnId);
-      this.props.delBtnAction(columnId);
+      this.props.delColumnAction(indexCol);
     }
   };
 
   render() {
     const { columnId, lock } = this.props;
+    const indexCol = this.props.columnArr.findIndex(obj => obj.id === columnId);
     if (!lock) {
       return (
         <div>
-          <button className="close ml-2 mb-1" aria-label="Close" onClick={() => this.delColumn(columnId)}>
+          <button className="close ml-2 mb-1" aria-label="Close" onClick={() => this.delColumn(indexCol)}>
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -30,20 +30,18 @@ class DelColumn extends Component {
 
 function mapStateToProps(store) {
   return {
-    columnNames: store.columnNames,
+    columnArr: store.columnArr,
   };
 }
 
 const mapDispatchToProps = dispatch => ({
-  delQuantAction: columnId => dispatch(delQuant(columnId)),
-  delBtnAction: columnId => dispatch(delBtn(columnId)),
+  delColumnAction: indexCol => dispatch(delColumn(indexCol)),
 });
 DelColumn.propTypes = {
-  update: PropTypes.func,
   lock: PropTypes.bool,
-  columnId: PropTypes.number,
-  delBtnAction: PropTypes.func.isRequired,
-  delQuantAction: PropTypes.func.isRequired,
+  columnId: PropTypes.string,
+  columnArr: PropTypes.array,
+  delColumnAction: PropTypes.func.isRequired,
 };
 
 export default connect(
