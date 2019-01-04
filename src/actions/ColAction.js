@@ -1,54 +1,37 @@
-/* eslint-disable import/prefer-default-export */
-export function setCol(col, idCol) {
+export function addColumn() {
   return {
-    type: 'COPY_COL',
-    payload: col,
-    idCol,
+    type: 'ADD_COLUMN',
+    payload: '',
   };
 }
 
-export function addBtn() {
+export function delColumn(delNum) {
   return {
-    type: 'ADD_BTN',
-    payload: '',
-  };
-}
-export function delBtn(delNum) {
-  return {
-    type: 'DEL_BTN',
+    type: 'DEL_COLUMN',
     payload: delNum,
   };
 }
-export function addQuant() {
-  return {
-    type: 'ADD_QUANT',
-    payload: '',
-  };
-}
-export function addCard(columnId) {
+
+export function addCard(indexCol) {
   return {
     type: 'ADD_CARD',
-    payload: columnId,
+    payload: indexCol,
   };
 }
-export function delCard(columnId, cardId) {
+
+export function delCard(indexCol, indexCard) {
   return {
     type: 'DEL_CARD',
-    payload: columnId,
-    cardId,
+    payload: indexCol,
+    indexCard,
   };
 }
-export function delQuant(delNum) {
-  return {
-    type: 'DEL_QUANT',
-    payload: delNum,
-  };
-}
-export function setColName(valueCol, idCol) {
+
+export function setColName(valueCol, indexCol) {
   return {
     type: 'SET_COL_NAME',
     payload: valueCol,
-    idCol,
+    indexCol,
   };
 }
 export function setUsername(username) {
@@ -64,37 +47,36 @@ export function startEnd() {
   };
 }
 
-export function setTask(columnId, cardId, valueTask) {
+export function setTask(valueTask) {
   return {
     type: 'SET_TASK',
-    payload: columnId,
-    cardId,
-    valueTask,
+    payload: valueTask,
   };
 }
-export function setDesc(columnId, cardId, valueDesc, username) {
+export function setDesc(valueDesc) {
   return {
     type: 'SET_DESC',
-    payload: columnId,
-    cardId,
-    valueDesc,
-    username,
+    payload: valueDesc,
   };
 }
-export function setComment(columnId, cardId, valueComment, username) {
+export function setComment(valueComment, username) {
   return {
     type: 'SET_COMMENT',
-    payload: columnId,
-    cardId,
-    valueComment,
+    payload: valueComment,
     username,
   };
 }
-export function setUserTask(columnId, cardId, username) {
+export function openCard(initialCard) {
   return {
-    type: 'SET_USER_TASK',
-    payload: columnId,
-    cardId,
-    username,
+    type: 'CARD_OPEN',
+    payload: initialCard,
+  };
+}
+export function updateCard(card, indexCol, indexCard) {
+  return {
+    type: 'CARD_UPDATE',
+    payload: card,
+    indexCol,
+    indexCard,
   };
 }
