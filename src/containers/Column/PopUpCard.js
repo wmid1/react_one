@@ -61,7 +61,7 @@ class PopUpCard extends Component {
               <button
                 className="  justify-content-md-end close align-top mr-2"
                 aria-label="Close"
-                onClick={() => this.close(indexCol, indexCard)}
+                onClick={() => this.close(columnId, indexCard)}
               >
                 <span aria-hidden="true">&times;</span>
               </button>
