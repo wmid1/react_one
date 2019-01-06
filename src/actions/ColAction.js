@@ -27,11 +27,11 @@ export function delCard(indexCol, indexCard) {
   };
 }
 
-export function setColName(valueCol, indexCol) {
+export function setColName(valueCol, columnNameId) {
   return {
     type: 'SET_COL_NAME',
     payload: valueCol,
-    indexCol,
+    columnNameId,
   };
 }
 export function setUsername(username) {
@@ -72,11 +72,11 @@ export function openCard(initialCard) {
     payload: initialCard,
   };
 }
-export function updateCard(card, indexCol, indexCard) {
+export function updateCard(card, columnId, indexCard) {
   return {
     type: 'CARD_UPDATE',
     payload: card,
-    indexCol,
+    columnId,
     indexCard,
   };
 }
