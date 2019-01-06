@@ -1,4 +1,4 @@
-const uuidv4 = require('uuid/v4');
+import uuidv4 from 'uuid/v4';
 
 const initialState = {
   id: '',
@@ -8,28 +8,33 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
-  const arrayCard = { ...state };
   switch (action.type) {
     case 'SET_TASK': {
-      arrayCard.task = action.payload;
-      return arrayCard;
+      return {
+        ...state,
+        task: action.payload,
+      };
     }
 
     case 'SET_DESC': {
-      arrayCard.desc = action.payload;
-      return arrayCard;
+      return {
+        ...state,
+        desc: action.payload,
+      };
     }
 
     case 'SET_COMMENT': {
-      arrayCard.comments = [
-        ...arrayCard.comments,
-        {
-          id: uuidv4(),
-          value: action.payload,
-          username: action.username,
-        },
-      ];
-      return arrayCard;
+      return {
+        ...state,
+        comments: [
+          ...state.comments,
+          {
+            id: uuidv4(),
+            value: action.payload,
+            username: action.username,
+          },
+        ],
+      };
     }
     case 'CARD_OPEN':
       return action.payload;
