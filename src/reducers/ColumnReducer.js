@@ -1,5 +1,5 @@
-const uuidv4 = require('uuid/v4');
-// { id: uuidv4(), value: '', username: '' }
+import uuidv4 from 'uuid/v4';
+
 const initialState = [
   {
     id: uuidv4(),
@@ -52,7 +52,6 @@ const initialState = [
 ];
 
 export default function(state = initialState, action) {
-  const arrayObjects = [...state];
   switch (action.type) {
     case 'ADD_COLUMN':
       return [
@@ -65,11 +64,13 @@ export default function(state = initialState, action) {
       ];
 
     case 'DEL_COLUMN': {
+      const arrayObjects = [...state];
       arrayObjects.splice(action.payload, 1);
 
       return arrayObjects;
     }
     case 'ADD_CARD': {
+      const arrayObjects = [...state];
       arrayObjects[action.payload].cards = [
         ...arrayObjects[action.payload].cards,
         {
@@ -84,18 +85,20 @@ export default function(state = initialState, action) {
     }
 
     case 'DEL_CARD': {
+      const arrayObjects = [...state];
       arrayObjects[action.payload].cards.splice(action.cardId, 1);
       return arrayObjects;
     }
 
     case 'SET_COL_NAME': {
-      arrayObjects[action.indexCol].columnName = action.payload;
-
+      const arrayObjects = [...state];
+      arrayObjects.find(a => a.id === action.columnNameId).columnName = action.payload;
       return arrayObjects;
     }
 
     case 'CARD_UPDATE': {
-      arrayObjects[action.indexCol].cards[action.indexCard] = action.payload;
+      const arrayObjects = [...state];
+      arrayObjects.find(a => a.id === action.columnId).cards[action.indexCard] = action.payload;
       return arrayObjects;
     }
 
