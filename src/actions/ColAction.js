@@ -5,17 +5,17 @@ export function addColumn() {
   };
 }
 
-export function delColumn(delNum) {
+export function delColumn(indexCol) {
   return {
     type: 'DEL_COLUMN',
-    payload: delNum,
+    payload: indexCol,
   };
 }
 
-export function addCard(indexCol) {
+export function addCard(columnId) {
   return {
     type: 'ADD_CARD',
-    payload: indexCol,
+    payload: columnId,
   };
 }
 
@@ -72,11 +72,11 @@ export function openCard(initialCard) {
     payload: initialCard,
   };
 }
-export function updateCard(card, columnId, indexCard) {
+export function updateCard(card, columnId, cardId) {
   return {
     type: 'CARD_UPDATE',
     payload: card,
     columnId,
-    indexCard,
+    cardId,
   };
 }
