@@ -70,36 +70,62 @@ export default function(state = initialState, action) {
       return arrayObjects;
     }
     case 'ADD_CARD': {
-      const arrayObjects = [...state];
-      arrayObjects[action.payload].cards = [
-        ...arrayObjects[action.payload].cards,
-        {
-          id: uuidv4(),
-          task: '',
-          desc: '',
-          comments: [],
-        },
-      ];
+      return state.map(column => {
+        if (column.id === action.payload) {
+          return {
+            ...column,
+            cards: [
+              ...column.cards,
+              {
+                id: uuidv4(),
+                task: '',
+                desc: '',
+                comments: [],
+              },
+            ],
+          };
+        }
 
-      return arrayObjects;
+        return column;
+      });
     }
 
     case 'DEL_CARD': {
       const arrayObjects = [...state];
-      arrayObjects[action.payload].cards.splice(action.cardId, 1);
+      arrayObjects[action.payload].cards.splice(action.indexCard, 1);
+
       return arrayObjects;
     }
 
     case 'SET_COL_NAME': {
-      const arrayObjects = [...state];
-      arrayObjects.find(a => a.id === action.columnNameId).columnName = action.payload;
-      return arrayObjects;
+      return state.map(column => {
+        if (column.id === action.columnNameId) {
+          return {
+            ...column,
+            columnName: action.payload,
+          };
+        }
+
+        return column;
+      });
     }
 
     case 'CARD_UPDATE': {
-      const arrayObjects = [...state];
-      arrayObjects.find(a => a.id === action.columnId).cards[action.indexCard] = action.payload;
-      return arrayObjects;
+      return state.map(column => {
+        if (column.id === action.columnId) {
+          return {
+            ...column,
+            cards: column.cards.map(card => {
+              if (card.id === action.cardId) {
+                return action.payload;
+              }
+              return card;
+            }),
+          };
+        }
+
+        return column;
+      });
     }
 
     default:
