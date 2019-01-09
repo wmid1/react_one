@@ -6,8 +6,9 @@ import DelCard from './DelCard';
 import './componentsStyle.css';
 
 class Column extends Component {
-  addCard = indexCol => {
-    this.props.addCardAction(indexCol);
+  addCard = () => {
+    const { columnId } = this.props;
+    this.props.addCardAction(columnId);
   };
 
   popUpCard = (cardBox, columnId, cardId) => {
@@ -38,7 +39,7 @@ class Column extends Component {
           <div>
             {include}
             <div>
-              <button className="btn btn-secondary mb-2 op" onClick={() => this.addCard(indexCol)}>
+              <button className="btn btn-secondary mb-2 op" onClick={() => this.addCard()}>
                 Add Card +
               </button>
             </div>
@@ -52,7 +53,7 @@ class Column extends Component {
       <div>
         {include}
         <div>
-          <button className="btn btn-secondary mb-2 op" onClick={() => this.addCard(indexCol)}>
+          <button className="btn btn-secondary mb-2 op" onClick={() => this.addCard()}>
             Add Card +
           </button>
         </div>
@@ -67,7 +68,7 @@ function mapStateToProps(store) {
 }
 const mapDispatchToProps = dispatch => ({
   openCardAction: initialCard => dispatch(openCard(initialCard)),
-  addCardAction: indexCol => dispatch(addCard(indexCol)),
+  addCardAction: columnId => dispatch(addCard(columnId)),
 });
 Column.propTypes = {
   columnArr: PropTypes.array,
